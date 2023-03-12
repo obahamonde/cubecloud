@@ -1,0 +1,19 @@
+{
+    "Image": "mysql:latest",
+    "ExposedPorts": {
+        "3306/tcp": {}
+    },
+    "HostConfig": {
+        "PortBindings": {
+            "3306/tcp": [
+                {
+                    "HostPort": "{{ port }}"
+                }
+            ]
+        }
+    }, 
+    "Env": [
+        "MYSQL_ROOT_PASSWORD={{ password}}"
+        "MYSQL_DATABASE={{ database }}"
+    ]
+}

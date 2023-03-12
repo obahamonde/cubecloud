@@ -1,0 +1,20 @@
+{
+    "Image": "postgres:latest",
+    "Env": [
+        "POSTGRES_USER={{ user }}",
+        "POSTGRES_PASSWORD={{ password }},
+        "POSTGRES_DB={{ database }}"
+    ],
+    "ExposedPorts": {
+        "5432/tcp": {}
+    },
+    "HostConfig": {
+        "PortBindings": {
+            "5432/tcp": [
+                {
+                    "HostPort": "{{ port }}"
+                }
+            ]
+        }
+    }
+}
