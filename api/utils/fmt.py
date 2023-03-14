@@ -2,7 +2,8 @@
 
 
 import re
-
+import jinja2
+from pydantic import BaseModel
 
 def pascalcase(_str: str):
     """Converts a string to PascalCase"""
@@ -25,3 +26,11 @@ def snakecase(_str: str):
 def kebabcase(_str: str):
     """Converts a string to kebab-case"""
     return snakecase(_str).replace("_", "-")
+
+
+def render_template(template: str, instance:BaseModel):
+    """Renders a Jinja2 template"""
+    _env = jinja2.Environment(loader=jinja2.FileSystemLoader('./templates'))
+    template = _env.get_template(template)
+    return template.render(instance.dict())
+
