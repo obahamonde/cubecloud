@@ -1,11 +1,19 @@
-FROM python:3.9-slim-buster
+FROM ubuntu:20.04
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
+RUN apt-get update && apt-get install -y git \
+    && git clone https://github.com/obahamonde/apprunner-codepen.git . \
+    && apt-get remove -y git \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install -r requirements.txt
+RUN apt-get update && apt-get install -y python3-pip \
+    && pip3 install -r requirements.txt \
+    && apt-get remove -y python3-pip \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY . .
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]

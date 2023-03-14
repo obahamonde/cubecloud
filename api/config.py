@@ -22,7 +22,7 @@ class Settings(BaseSettings):
         ..., env="GOOGLE_APPLICATION_CREDENTIALS"
     )
     GOOGLE_SCOPES: List[str] = Field(..., env="GOOGLE_SCOPES")
-    BUCKET_NAME:str = Field(..., env="BUCKET_NAME")
+    BUCKET_NAME: str = Field(..., env="BUCKET_NAME")
 
 
 env = Settings()
