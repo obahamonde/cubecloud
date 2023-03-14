@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     )
     GOOGLE_SCOPES: List[str] = Field(..., env="GOOGLE_SCOPES")
     BUCKET_NAME: str = Field(..., env="BUCKET_NAME")
-
-
+    CF_API_KEY: str = Field(..., env="CF_API_KEY")
+    CF_EMAIL: str = Field(..., env="CF_EMAIL")
+    CF_ZONE_ID: str = Field(..., env="CF_ZONE_ID")
+    CF_ACCOUNT_ID: str = Field(..., env="CF_ACCOUNT_ID")
+    
+    
 env = Settings()

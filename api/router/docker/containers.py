@@ -10,7 +10,7 @@ from jinja2 import Template
 
 from api.config import env
 
-from api.schemas import DBContainer
+
 
 
 class ContainerRouter(APIRouter):
@@ -35,3 +35,21 @@ async def get_containers() -> List[Dict[str,Any]]:
             if response.status == status.HTTP_200_OK:
                 return await response.json()
             return []
+        
+@app.post("/", response_class=JSONResponse)
+async def create_container() -> Dict[str,Any]:
+    """Create a container"""
+    async with ClientSession() as session:
+        async with session.post(f"{app.base_url}/containers/create") as response:
+            if response.status == status.HTTP_200_OK:
+                return await response.json()
+            return {}
+        
+@app.get("version", response_class=JSONResponse)
+async def get_version() -> Dict[str,Any]:
+    """Get version"""
+    async with ClientSession() as session:
+        async with session.get(f"{app.base_url}/version") as response:
+            if response.status == status.HTTP_200_OK:
+                return await response.json()
+            return {}

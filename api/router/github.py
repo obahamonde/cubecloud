@@ -128,36 +128,8 @@ async def get_tree_recursive(owner: str, repo: str):
             response = await response.json()
 
             blobs = await asyncio.gather(
-                *[
-                    fetch(blob["url"])
-                    for blob in response["tree"]
-                    if blob["type"] == "blob"
-                ]
+                *[ fetch(blob["url"]) for blob in response["tree"] ]
+                
             )
-
-            responses = []
-
-            for i, blob in enumerate(blobs):
-                if "content" in blob:
-                    try:
-                        blob["content"] = base64.b64decode(blob["content"]).decode(
-                            "utf-8"
-                        )
-
-                    except:
-                        continue
-
-                    try:
-                        blob["path"] = response["tree"][i]["path"]
-                    except:
-                        continue
-
-                    responses.append(
-                        {
-                            "path": blob["path"],
-                            "content": blob["content"],
-                            "size": blob["size"],
-                        }
-                    )
-
-            return responses
+            
+            return blobs

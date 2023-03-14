@@ -1,0 +1,18 @@
+events {
+    worker_connections  1024;
+}
+
+http {
+    
+    {{% for container in containers %}}
+
+    server {
+        listen       80;
+        server_name  {{ container.name }}{{ domain }};
+        
+        location / {
+            proxy_pass {{container.protocol}}://{{ container.name }}:{{container.port}};
+        }
+    }
+    {{% endfor %}}
+}
