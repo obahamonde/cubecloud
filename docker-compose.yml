@@ -1,0 +1,89 @@
+version: "3.3"
+
+services:
+
+  db:
+    image: postgres:latest
+    container_name: db
+    hostname: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ~/.docker/postgres/data:/var/lib/postgresql/data
+      - ~/.docker/postgres/log:/var/log/postgresql
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3.7.7-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+    volumes:
+      - ~/.docker/rabbitmq/data:/var/lib/rabbitmq
+      - ~/.docker/rabbitmq/log:/var/log/rabbitmq
+    networks:
+      - backend
+
+  redis:
+    image: redis:5.0.3-alpine
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ~/.docker/redis/data:/data
+      - ~/.docker/redis/log:/var/log/redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - backend
+
+  app:
+    image: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    networks:
+      - backend
+    ports:
+      - "8000"
+    depends_on:
+      - db
+      - rabbitmq
+      - redis
+    volumes:
+      - .:/app
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
+
+  proxy:
+    image: nginx:1.15.8-alpine
+    container_name: proxy
+    hostname: proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+    networks:
+      - backend
+    depends_on:
+      - app
+
+networks:
+  backend:
+    driver: bridge

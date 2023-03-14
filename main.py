@@ -11,8 +11,7 @@ app = create_app()
 async def compose() -> Response:
     """Compose a docker image"""
     async with ClientSession() as session:
-        async with session.get(f"{env.DOCKER_URL}/images/json") as response:
+        async with session.get(f"{env.DOCKER_URL}/containers/json") as response:
             if response.status == status.HTTP_200_OK:
-                return Response(status_code=status.HTTP_200_OK)
-            return Response(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+                return Response(await response.text(), media_type="application/json")
+            return Response(await response.text(), media_type="application/json")
