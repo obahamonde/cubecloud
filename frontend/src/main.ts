@@ -13,7 +13,7 @@ import generatedRoutes from "virtual:generated-pages";
 import { setupLayouts } from "virtual:generated-layouts";
 import "@mdi/font/css/materialdesignicons.css";
 import { createAuth0 } from "@auth0/auth0-vue";
-import "vuepython/style.css"
+import "vuepython/style.css";
 
 const routes = setupLayouts(generatedRoutes);
 

@@ -27,6 +27,6 @@ class Settings(BaseSettings):
     CF_EMAIL: str = Field(..., env="CF_EMAIL")
     CF_ZONE_ID: str = Field(..., env="CF_ZONE_ID")
     CF_ACCOUNT_ID: str = Field(..., env="CF_ACCOUNT_ID")
-    
-    
+
+
 env = Settings()

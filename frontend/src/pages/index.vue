@@ -1,6 +1,7 @@
 <template>
   <div col w-full>
-  <AppEditor/>
-</div>
-  <AppNotifier/>
+    <AppEditor />
+  </div>
+  <div text-white></div>
+  <AppNotifier />
 </template>

@@ -1,19 +1,18 @@
 from fastapi import APIRouter
-from api.router.docker import app as docker_app
-from api.router.github import app as github_app
-from api.router.auth import app as oauth2_app
-from api.router.cloudflare import app as cloudflare_app
-from api.middleware.notifier import app as notifier_app
+from api.router.containers import app as docker_app
+from api.router.auth import app as auth_app
+from api.router.build import app as build_app
 
 
-app = APIRouter(prefix="/api")
 
-app.include_router(cloudflare_app)
+class API(APIRouter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.prefix = "/api"
 
-app.include_router(notifier_app)
+    def use(self, router: APIRouter):
+        self.include_router(router)
+        return self
 
-app.include_router(oauth2_app)
 
-app.include_router(docker_app)
-
-app.include_router(github_app)
+app = API().use(docker_app).use(build_app).use(auth_app)

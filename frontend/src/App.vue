@@ -10,7 +10,7 @@ const { isAuthenticated, loginWithRedirect } = useAuth0();
   </div>
   <div v-else class="landing">
     <AppLanding />
-</div>
+  </div>
 </template>
 <style global>
 .landing {
@@ -25,7 +25,7 @@ const { isAuthenticated, loginWithRedirect } = useAuth0();
   background-attachment: fixed;
   background-color: #36465d;
 }
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;

@@ -3,7 +3,7 @@ version: "3.3"
 services:
 
   db:
-    image: postgres:latest
+    image: postgres:11.2-alpine
     container_name: db
     hostname: db
     ports:
@@ -58,26 +58,13 @@ services:
     networks:
       - backend
     ports:
-      - "8000"
+      - "80:80"
     depends_on:
       - db
       - rabbitmq
       - redis
     volumes:
       - .:/app
-    environment:
-      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
-      - REDIS_URL=redis://redis:6379
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-
-  proxy:
-    image: nginx:1.15.8-alpine
-    container_name: proxy 
-    hostname: proxy
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
 
 networks:
   backend:

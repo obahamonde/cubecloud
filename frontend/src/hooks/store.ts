@@ -1,29 +1,34 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { Message, Notify, User } from "./types";
+import { Notify, User, FileProps } from "./types";
 
 export const useStore = defineStore("state", () => {
   const state = reactive({
-    messages: [] as Message[],
+    currentFile: {
+      name: "",
+      content: "",
+    },
     user: null as User | null,
-    notifications: [] as Notify[]
+    notifications: [] as Notify[],
+    codeSpace: null as any | null,
+    sidebar: "files",
   });
   const setState = (newState: any) => {
     Object.assign(state, newState);
   };
 
-  const notify = (noti:Notify)=>{
-    state.notifications.push(noti)
-    const audio = new Audio(`/audio/${noti.status}.mp3`)
-    audio.play()
-    setTimeout(()=>{
-        state.notifications.pop()
-    }, 5000)
-}
+  const notify = (noti: Notify) => {
+    state.notifications.push(noti);
+    const audio = new Audio(`/audio/${noti.status}.mp3`);
+    audio.play();
+    setTimeout(() => {
+      state.notifications.pop();
+    }, 5000);
+  };
 
   return {
     state,
     setState,
-    notify
+    notify,
   };
 });
 

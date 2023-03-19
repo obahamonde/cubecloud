@@ -1,46 +1,51 @@
 <script setup lang="ts">
-const items = [
+const items = ref([
   {
     title: "Files",
     icon: "mdi-file-multiple-outline",
-    to: "/",
   },
   {
     title: "Dashboard",
     icon: "mdi-view-dashboard",
-    to: "/dashboard",
   },
   {
     title: "Settings",
     icon: "mdi-cog",
-    to: "/settings",
   },
   {
     title: "About",
     icon: "mdi-information",
-    to: "/about",
   },
-];
+]);
+
+const currentRoute = ref("Files");
+
+const push = (route: string) => {
+  currentRoute.value = route;
+};
 </script>
 <template>
-<section
-row start text-white  shadow-black shadow-lg backdrop-blur-md bg-secondary h-100vh
->
-<nav col start p-2>
-    <div
-      v-for="item in items"
-      
-      class="col center"
-    >
-      <VBtn icon color="#36465D"
-      :title="item.title"
-      >
-        <VIcon :icon="item.icon" text-white />
-      </VBtn>
+  <section row start text-white shadow-black shadow-lg backdrop-blur-md bg-secondary h-100vh>
+    <nav col start p-2>
+      <div v-for="item in items" class="col center">
+        <VBtn icon color="#36465D" :title="item.title" @click="push(item.title)">
+          <VIcon :icon="item.icon" text-white />
+        </VBtn>
       </div>
     </nav>
-<div>
-  <AppTree/>
-</div>
-</section>
+    <div>
+      <div v-if="currentRoute === 'Files'">
+        <AppTree />
+      </div>
+      <div v-if="currentRoute === 'Dashboard'">
+        <AppDashBoard />
+      </div>
+      <div v-if="currentRoute === 'Settings'">
+        <AppSettings />
+      </div>
+      <div v-if="currentRoute === 'About'">
+        <AppAbout />
+      </div>
+    </div>
+  </section>
 </template>

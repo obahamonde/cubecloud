@@ -7,11 +7,13 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+conf
+frontend
 node_modules
 dist
 dist-ssr
 *.local
-
+containers/*
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,6 +24,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+frontend
+conf
+.venv
+containers
 
 # OS generated files
 .DS_Store

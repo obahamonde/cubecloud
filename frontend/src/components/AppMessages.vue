@@ -20,7 +20,6 @@ const synthetize = (msg: Message) => {
   }
   play();
 };
-
 </script>
 <template>
   <VContainer class="col gap-4">
@@ -43,9 +42,7 @@ const synthetize = (msg: Message) => {
         </div>
         <VCardText v-text="msg.message" />
         <div v-if="msg.sender === 'bot'" col center gap-1>
-          <img src="/logo.svg" class="rf cp x2 sh"
-            @click="synthetize(msg)"
-          />
+          <img src="/logo.svg" class="rf cp x2 sh" @click="synthetize(msg)" />
           <p
             :class="
               isDark

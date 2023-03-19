@@ -14,14 +14,14 @@ export default defineConfig({
       "~/": `${path.resolve(__dirname, "src")}/`,
     },
   },
-  server:{
-    proxy:{
-      '/api': {
-        target: 'http://localhost:8000/api',
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:8000/api",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      } 
-    }
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 
   build: {
