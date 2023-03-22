@@ -2,7 +2,7 @@
 generator client {
   provider = "prisma-client-py"
   interface = "asyncio"
-  }
+  } 
 
 datasource db {
   provider = "postgresql"

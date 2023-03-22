@@ -1,7 +1,7 @@
 import aiohttp
 from typing import Dict, Optional, Union, Any
 
-async def fetch(
+async def fetch(    
     url: str,
     method: str = "GET",
     headers: Optional[Dict[str, str]] = None,
@@ -17,4 +17,4 @@ async def fetch(
                 return await response.json()
             if response.content_type.startswith("text/"):
                 return await response.text()
-            return await response.read()
+            return await response.read()    

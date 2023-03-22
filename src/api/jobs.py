@@ -1,6 +1,6 @@
 import json
 from typing import *
-from src import fetch
+from src.handlers.fetch import fetch
 from bs4 import BeautifulSoup
 
 """
