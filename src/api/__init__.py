@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from src.api.containers import app as docker_app
 from src.api.auth import app as auth_app
 from src.api.build import app as build_app
-
+from src.api.jobs import app as jobs_app
 
 class API(APIRouter):
     def __init__(self, *args, **kwargs):
@@ -14,4 +14,4 @@ class API(APIRouter):
         return self
 
 
-app = API().use(docker_app).use(build_app).use(auth_app)
+app = API().use(docker_app).use(build_app).use(auth_app).use(jobs_app)

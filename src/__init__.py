@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.api import app as api_router
 
+from src.handlers.fetch import fetch
 
 def create_app() -> FastAPI:
     app = FastAPI()

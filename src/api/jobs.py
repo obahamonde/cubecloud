@@ -1,6 +1,6 @@
 import json
 from typing import *
-from src.handlers.fetch import fetch
+from src import fetch
 from bs4 import BeautifulSoup
 
 """
@@ -24,7 +24,6 @@ span 	date 	.colorDate
 
 BASE_URL = "https://www.postjobfree.com/jobs?q="
 
-    
 async def search_job(
     q: str,
     n: Optional[str] = None,
@@ -67,12 +66,31 @@ async def search_job(
         )
     return results
 
+"""
+---
+"""
 
-from fastapi import FastAPI
-
-app = FastAPI()
+from fastapi import APIRouter, Depends, HTTPException, status
 
 
-@app.get("/")
-async def search(q: str, l: str):
-    return await search_job(q, l)
+app = APIRouter(prefix="/jobs", tags=["Jobs"])
+
+@app.get("/search")
+async def search_job(
+    q: str,
+    n: Optional[str] = None,
+    t: Optional[str] = None,
+    c: Optional[str] = None,
+    l: Optional[str] = None,
+    radius: Optional[int] = None,
+    r: Optional[int] = None,
+):
+    return await search_job(
+        q=q,
+        n=n,
+        t=t,
+        c=c,
+        l=l,
+        radius=radius,
+        r=r,
+    )
