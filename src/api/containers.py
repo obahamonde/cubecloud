@@ -10,13 +10,15 @@ from fastapi import APIRouter, status, WebSocket, WebSocketDisconnect
 
 from fastapi.responses import PlainTextResponse, JSONResponse
 
-from api.config import env
+from src.config import env
 
-from api.data.schemas import ContainerConfig, ProxyConfig
+from src.utils.gen import gen_name, gen_port
 
-from api.utils.gen import gen_name, gen_port
+from src.handlers.fetch import fetch
 
-from api.hooks.fetch import fetch
+from src.handlers.dns import create_dns_record
+
+from src.schemas.schemas import ContainerConfig
 
 app = APIRouter(tags=["docker"])
 
@@ -91,11 +93,16 @@ async def get_containers() -> List[Dict[str, Any]]:
     - Ports: A list of port mappings for the container
     - Labels: A dictionary of key-value pairs representing metadata about the container
     """
-    containers = await fetch("GET",f"{env.DOCKER_URL}/containers/json?all=1",{
-        "Content-Type": "application/json"
-    })
-    
-    return await asyncio.gather(*[get_container(container["Id"]) for container in containers])
+    containers = await fetch(
+        "GET",
+        f"{env.DOCKER_URL}/containers/json?all=1",
+        {"Content-Type": "application/json"},
+    )
+
+    return await asyncio.gather(
+        *[get_container(container["Id"]) for container in containers]
+    )
+
 
 @app.post("/containers/{name}", response_class=JSONResponse)
 async def create_container(name: str, container: ContainerConfig) -> Dict[str, Any]:
@@ -202,10 +209,9 @@ async def get_logs(container: str):
 
 @app.get("/containers/{container}/stats", response_class=JSONResponse)
 async def get_container_stats(container: str) -> Dict[str, Any]:
-
     """
     Returns statistics about the specified Docker container.
-    
+
     Args:
     - container: The name or ID of the container to get statistics for
 
@@ -226,7 +232,10 @@ async def get_container_stats(container: str) -> Dict[str, Any]:
 
 @app.post("/containers/{container}/{image}", response_class=JSONResponse)
 async def deploy_container(
-    container: str, image: str, port: int = 8080, env_vars: str = "DOCKER=1",
+    container: str,
+    image: str,
+    port: int = 8080,
+    env_vars: str = "DOCKER=1",
 ) -> Dict[str, Any]:
     """
     Endpoint for deploying a container with the specified image and configuration.
@@ -275,7 +284,7 @@ async def expose_container(
     nginx_conf = NginxConf(
         container_name=container, container_port=port, subdomain=subdomain
     )
-    await create_record(nginx_conf.subdomain if nginx_conf.subdomain else gen_name(32))
+    await (nginx_conf.subdomain if nginx_conf.subdomain else gen_name(32))
     async with ClientSession() as session:
         async with session.post(
             "https://smartpro.solutions/",

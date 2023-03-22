@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:8000/api",
+      target: "http://localhost:8000/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
@@ -25,7 +25,7 @@ export default defineConfig({
   },
 
   build: {
-    outDir: "../static",
+    outDir: "dist",
     emptyOutDir: true,
   },
 

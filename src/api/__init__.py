@@ -1,8 +1,7 @@
 from fastapi import APIRouter
-from api.router.containers import app as docker_app
-from api.router.auth import app as auth_app
-from api.router.build import app as build_app
-
+from src.api.containers import app as docker_app
+from src.api.auth import app as auth_app
+from src.api.build import app as build_app
 
 
 class API(APIRouter):

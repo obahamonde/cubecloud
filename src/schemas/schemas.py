@@ -106,18 +106,15 @@ class DNSConfig(BaseModel):
 
 
 class ProxyConfig(BaseModel):
-
     domain: Optional[str] = Field(default="smartpro.solutions")
     subdomain: Optional[str] = Field(default=None)
     container_name: str = Field(...)
     container_port: int = Field(...)
 
     def __init__(self, **data) -> None:
-
         super().__init__(**data)
 
         if self.subdomain is None:
-
             self.subdomain = self.container_name
 
 
@@ -137,9 +134,9 @@ class HttpRequest(BaseModel):
     def build_url(self, url: str) -> str:
         return f"{self.url}{url}"
 
+
 class WSMessage(BaseModel):
     sub: str = Field(..., example="auh0|xfaf|sdf0")
     message: str = Field(..., example="Hello World!")
     event: Optional[str] = Field(default=None)
     status: Optional[str] = Field(default=None)
-    

@@ -1,9 +1,9 @@
 from typing import Optional
 from datetime import datetime
 
-from api.data.orm import FaunaModel as Q, Field, Optional
+from src.schemas.orm import FaunaModel as Q, Field, Optional
 
-from api.utils.misc import gen_name, gen_password, gen_port
+from src.utils.misc import gen_name, gen_password, gen_port
 
 
 class User(Q):

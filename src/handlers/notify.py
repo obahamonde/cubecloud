@@ -1,6 +1,7 @@
 from typing import List
 from starlette.websockets import WebSocket
 
+
 class Notifier:
     def __init__(self):
         self.connections: List[WebSocket] = []
@@ -30,4 +31,3 @@ class Notifier:
             await websocket.send_text(message)
             living_connections.append(websocket)
         self.connections = living_connections
-

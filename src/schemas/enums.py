@@ -82,9 +82,4 @@ class volume_event(str, Enum):
     unmount = "unmount"
 
 
-CloudEvent = Union[
-                container_event, 
-                image_event,
-                network_event,
-                volume_event
-            ]
+CloudEvent = Union[container_event, image_event, network_event, volume_event]

@@ -2,7 +2,7 @@
 import { isDark } from "../hooks/dark";
 
 import { useAuth0 } from "@auth0/auth0-vue";
-import { useSynthesis } from "../hooks";
+import { useSynthesis, Message } from "../hooks";
 
 const { state } = useStore();
 
@@ -20,6 +20,7 @@ const synthetize = (msg: Message) => {
   }
   play();
 };
+
 </script>
 <template>
   <VContainer class="col gap-4">
@@ -42,7 +43,9 @@ const synthetize = (msg: Message) => {
         </div>
         <VCardText v-text="msg.message" />
         <div v-if="msg.sender === 'bot'" col center gap-1>
-          <img src="/logo.svg" class="rf cp x2 sh" @click="synthetize(msg)" />
+          <img src="/logo.svg" class="rf cp x2 sh"
+            @click="synthetize(msg)"
+          />
           <p
             :class="
               isDark

@@ -25,6 +25,7 @@ const { isAuthenticated, loginWithRedirect } = useAuth0();
   background-attachment: fixed;
   background-color: #36465d;
 }
+
 * {
   margin: 0;
   padding: 0;

@@ -8,8 +8,7 @@ from faunadb import query as q
 from faunadb.objects import Query
 from faunadb.client import FaunaClient
 from faunadb.errors import NotFound, BadRequest
-from api.config import env
-from api.utils.misc import gen_oid, gen_now
+from src.utils.misc import gen_oid, gen_now
 
 
 class FaunaModel(BaseModel):

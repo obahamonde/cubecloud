@@ -26,5 +26,8 @@ declare module '@vue/runtime-core' {
     Dark: typeof import('./components/Dark.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VCamera: typeof import('./components/VCamera.vue')['default']
+    VLogin: typeof import('./components/VLogin.vue')['default']
+    VShareScreen: typeof import('./components/VShareScreen.vue')['default']
   }
 }

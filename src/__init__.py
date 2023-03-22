@@ -4,7 +4,7 @@ from fastapi import FastAPI
 
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.router import app as api_router
+from src.api import app as api_router
 
 
 def create_app() -> FastAPI:
